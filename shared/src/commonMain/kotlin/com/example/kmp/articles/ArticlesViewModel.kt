@@ -2,6 +2,8 @@ package com.example.kmp.articles
 
 import com.example.kmp.BaseViewModel
 import com.example.kmp.provideHttpClient
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.IO
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -24,16 +26,14 @@ class ArticlesViewModel : BaseViewModel() {
     }
 
     private fun getArticles() {
-        scope.launch {
+        scope.launch((Dispatchers.IO)) {
             try {
                 val articles = useCase.getArticles()
                 _articlesState.emit(ArticlesState(articles))
             } catch (e: Exception) {
                 e.printStackTrace()
-            } finally {
                 _articlesState.emit(ArticlesState(listOf()))
             }
-
         }
     }
 

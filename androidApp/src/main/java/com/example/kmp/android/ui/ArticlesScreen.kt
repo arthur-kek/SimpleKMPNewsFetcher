@@ -48,11 +48,12 @@ import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import com.example.kmp.articles.Article
 import com.example.kmp.articles.ArticlesViewModel
+import org.koin.androidx.compose.getViewModel
 
 @Composable
 fun ArticlesScreen(
-    articlesViewModel: ArticlesViewModel,
-    onAboutButtonClicked: () -> Unit
+    onAboutButtonClicked: () -> Unit,
+    articlesViewModel: ArticlesViewModel = getViewModel()
 ) {
 
     val articlesState = articlesViewModel.articlesState.collectAsState()

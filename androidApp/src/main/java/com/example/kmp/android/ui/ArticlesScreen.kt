@@ -48,6 +48,8 @@ import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import com.example.kmp.articles.Article
 import com.example.kmp.articles.ArticlesViewModel
+import com.google.accompanist.swiperefresh.SwipeRefresh
+import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import org.koin.androidx.compose.getViewModel
 
 @Composable
@@ -61,9 +63,8 @@ fun ArticlesScreen(
     Column {
         AppBar(onAboutButtonClicked)
         with(articlesState.value) {
-            if(loading) Loader()
             if(error != null) ErrorMessage(error!!)
-            if(articles.isNotEmpty()) ArticlesListView(articles)
+            else ArticlesListView(articlesViewModel)
         }
     }
 }
@@ -85,12 +86,37 @@ private fun AppBar(onAboutButtonClicked: () -> Unit) {
 }
 
 @Composable
-private fun ArticlesListView(
-    articles: List<Article>
-) {
-    LazyColumn(modifier = Modifier.fillMaxSize()) {
-        items(articles) { article ->
-            ArticleItemView(article)
+fun ArticlesListView(viewModel: ArticlesViewModel) {
+    val articlesState by viewModel.articlesState.collectAsState()
+
+    SwipeRefresh(
+        state = rememberSwipeRefreshState(articlesState.loading),
+        onRefresh = { viewModel.getArticles(true) }
+    ) {
+        LazyColumn(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(top = 8.dp)
+        ) {
+            items(articlesState.articles) { article ->
+                ArticleItemView(article)
+            }
+
+            if (articlesState.articles.isEmpty()) {
+                item {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(16.dp),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Text(
+                            text = "No articles available. Pull to refresh!",
+                            style = MaterialTheme.typography.bodyLarge
+                        )
+                    }
+                }
+            }
         }
     }
 }

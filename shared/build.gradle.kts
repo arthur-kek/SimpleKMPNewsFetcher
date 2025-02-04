@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.touchlab.skie)
+    alias(libs.plugins.sqlDelight)
 }
 
 kotlin {
@@ -37,6 +38,7 @@ kotlin {
             implementation(libs.ktor.client.serialization)
             implementation(libs.kotlinx.datetime)
             implementation(libs.koin.core)
+            implementation(libs.sql.coroutines.extensions)
         }
 
         androidMain.dependencies {
@@ -44,10 +46,12 @@ kotlin {
             implementation(libs.ktor.client.android)
             implementation(libs.ktor.client.logging)
             implementation(libs.ktor.client.okhttp)
+            implementation(libs.sql.android.driver)
         }
 
         iosMain.dependencies {
             implementation(libs.ktor.client.darwin)
+            implementation(libs.sql.native.driver)
         }
 
         commonTest.dependencies {
@@ -68,5 +72,13 @@ android {
     }
     packaging {
         resources.excludes += "**/*"
+    }
+}
+
+sqldelight {
+    databases {
+        create(name = "SimpleSharedDataBase") {
+            packageName.set("example.kmp.db")
+        }
     }
 }

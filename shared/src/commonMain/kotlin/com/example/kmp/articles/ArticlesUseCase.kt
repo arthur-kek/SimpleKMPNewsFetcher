@@ -1,10 +1,10 @@
 package com.example.kmp.articles
 
 import kotlinx.datetime.*
-class ArticlesUseCase(private val service: ArticleService) {
+class ArticlesUseCase(private val repo: ArticlesRepository) {
 
-    suspend fun getArticles(): List<Article> {
-        val articleRows = service.fetchArticles()
+    suspend fun getArticles(forceFetch: Boolean): List<Article> {
+        val articleRows = repo.getArticles(forceFetch)
         return articleRows.map { raw ->
             Article(
                 title = raw.title,

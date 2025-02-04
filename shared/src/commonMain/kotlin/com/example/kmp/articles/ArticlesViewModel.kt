@@ -1,6 +1,7 @@
 package com.example.kmp.articles
 
 import com.example.kmp.BaseViewModel
+import com.example.kmp.core.logging.Logger
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -20,10 +21,12 @@ class ArticlesViewModel(
         getArticles()
     }
 
-    private fun getArticles() {
+    fun getArticles(forceFetch: Boolean = false) {
         scope.launch((Dispatchers.IO)) {
             try {
-                val articles = useCase.getArticles()
+                _articlesState.emit(ArticlesState(loading = true, articles = _articlesState.value.articles))
+                val articles = useCase.getArticles(forceFetch)
+                Logger.log("Fetched ${articles.size} articles!")
                 _articlesState.emit(ArticlesState(articles))
             } catch (e: Exception) {
                 e.printStackTrace()

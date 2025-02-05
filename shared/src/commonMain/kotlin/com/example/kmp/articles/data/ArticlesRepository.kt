@@ -1,4 +1,4 @@
-package com.example.kmp.articles
+package com.example.kmp.articles.data
 
 import com.example.kmp.core.logging.Logger
 import com.example.kmp.core.network.NetworkMonitor

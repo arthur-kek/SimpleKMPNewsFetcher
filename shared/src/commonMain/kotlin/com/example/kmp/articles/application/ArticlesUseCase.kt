@@ -1,5 +1,6 @@
-package com.example.kmp.articles
+package com.example.kmp.articles.application
 
+import com.example.kmp.articles.data.ArticlesRepository
 import kotlinx.datetime.*
 class ArticlesUseCase(private val repo: ArticlesRepository) {
 

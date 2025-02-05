@@ -1,6 +1,7 @@
-package com.example.kmp.articles
+package com.example.kmp.articles.presentation
 
-import com.example.kmp.BaseViewModel
+import com.example.kmp.core.base.BaseViewModel
+import com.example.kmp.articles.application.ArticlesUseCase
 import com.example.kmp.core.logging.Logger
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO

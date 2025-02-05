@@ -1,4 +1,4 @@
-package com.example.kmp.articles
+package com.example.kmp.articles.application
 
 data class Article(
     val title: String,

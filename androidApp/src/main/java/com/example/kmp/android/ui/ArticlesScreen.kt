@@ -46,8 +46,8 @@ import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImagePainter
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
-import com.example.kmp.articles.Article
-import com.example.kmp.articles.ArticlesViewModel
+import com.example.kmp.articles.application.Article
+import com.example.kmp.articles.presentation.ArticlesViewModel
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import org.koin.androidx.compose.getViewModel

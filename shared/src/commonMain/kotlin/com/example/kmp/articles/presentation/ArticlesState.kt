@@ -1,4 +1,6 @@
-package com.example.kmp.articles
+package com.example.kmp.articles.presentation
+
+import com.example.kmp.articles.application.Article
 
 class ArticlesState(
     val articles: List<Article> = listOf(),
